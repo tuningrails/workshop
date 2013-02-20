@@ -1,11 +1,5 @@
 # Tuning Rails Workshop
 
-For all the techniques we'll learn in this workshop, there are tradeoffs we need to be aware of. At the end of each lab, we'll discuss those tradeoffs and how to be aware of them. Let's think of responsiveness as our goal, and focus on the critical path: the places in our app where users feel the most pain from lack of responsiveness.
-
-All web performance tuning comes down to two core concepts: Moving work out of our critical application path, and reducing work by saving its results somewhere.
-
-With that in mind, here's my planned outline for our class. We may not get to it all, so let me know what most interests from the following topics. Thanks!
-
 ## Monday
 
 To kick off this workshop, we'll discuss:
