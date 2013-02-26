@@ -58,8 +58,9 @@ At lunch, we touched on Netflix's [CHAOS MONKEY](http://techblog.netflix.com/201
 One of you asked about a tool for [speeding up asset precompliaton](https://github.com/ndbroadbent/turbo-sprockets-rails3). See instructions for [Heroku](https://github.com/ndbroadbent/turbo-sprockets-rails3).
 
 
-## Things we'll cover tomorrow on Day 2
+## Things we'll cover on Day 2
 
+* reviewing threads and processes
 * [HTTP caching for Rails responses](https://devcenter.heroku.com/articles/http-caching-ruby-rails#timebased-cache-headers)
 * [Rack::Cache](https://devcenter.heroku.com/articles/rack-cache-memcached-rails31) for storing and serving assets, public responses
 * Tools for integrating performance profiling in your development workflow: [mini-profiler](https://github.com/SamSaffron/MiniProfiler/tree/master/Ruby), [Rails Performance Tests](http://guides.rubyonrails.org/performance_testing.html)
