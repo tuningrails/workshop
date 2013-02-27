@@ -125,4 +125,6 @@ Load tester:
 
 ## Notes
 
-top, htop
+
+Watch system usage on Linux: top, htop
+
