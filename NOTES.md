@@ -53,21 +53,70 @@ We saw high variation in results, so we tested the servers in relative isolation
 
 ## Random discussions
 
-At lunch, we touched on Netflix's [CHAOS MONKEY](http://techblog.netflix.com/2012/07/chaos-monkey-released-into-wild.html), an agent of destruction designed to test the resilience of production infrastructure.
+Netflix's [CHAOS MONKEY](http://techblog.netflix.com/2012/07/chaos-monkey-released-into-wild.html), an agent of destruction for testing resilience of production infrastructure.
 
-One of you asked about a tool for [speeding up asset precompliaton](https://github.com/ndbroadbent/turbo-sprockets-rails3). See instructions for [Heroku](https://github.com/ndbroadbent/turbo-sprockets-rails3).
+A useful tool for [speeding up asset precompliaton](https://github.com/ndbroadbent/turbo-sprockets-rails3). See instructions for [Heroku](https://github.com/ndbroadbent/turbo-sprockets-rails3).
 
-
-## Things we'll cover on Day 2
-
-* discuss 'fuzzies' from Day 1: async javascript, threads vs processes, buzzword review and workflow clarification (see below)
-* [HTTP caching for Rails responses](https://devcenter.heroku.com/articles/http-caching-ruby-rails#timebased-cache-headers)
-* [Rack::Cache](https://devcenter.heroku.com/articles/rack-cache-memcached-rails31) for storing and serving assets, public responses
-* Tools for integrating performance profiling in your development workflow: [mini-profiler](https://github.com/SamSaffron/MiniProfiler/tree/master/Ruby), [Rails Performance Tests](http://guides.rubyonrails.org/performance_testing.html)
-* Moving work into the background with Resque and Sidekiq
 
 ## Useful commands
 
 rake middleware: see which classes process your full Rails request
 
 mate \`bundle show heroku-deflater\`: open this gem in Textmate. Note backticks, not quotes.
+
+# Day 2
+
+We revisited the [problem with averages](http://37signals.com/svn/posts/1836-the-problem-with-averages) in performance measurements.
+
+We discussed theads vs processes again.
+
+
+## Caching in Rack::Cache
+
+
+* [HTTP caching for Rails responses](https://devcenter.heroku.com/articles/http-caching-ruby-rails#timebased-cache-headers)
+* [Rack::Cache](https://devcenter.heroku.com/articles/rack-cache-memcached-rails31) for storing and serving assets, public responses
+* Tools for integrating performance profiling in your development workflow: [mini-profiler](https://github.com/SamSaffron/MiniProfiler/tree/master/Ruby), [Rails Performance Tests](http://guides.rubyonrails.org/performance_testing.html)
+
+
+## Fragment caching
+
+http://37signals.com/svn/posts/3113-how-key-based-cache-expiration-works
+
+http://guides.rubyonrails.org/caching_with_rails.html
+
+Model#cache_key is "#{id}-#{updated_at.to_i}"
+
+## Day 3
+
+* Discuss background jobs and add some to our app
+* Run persistent load test from a remote server against our raw, unoptimized app
+
+
+### Postgresql
+
+Check size of biggest relations (tables and indexes):
+```
+SELECT nspname || '.' || relname AS "relation",
+    pg_size_pretty(pg_relation_size(C.oid)) AS "size"
+  FROM pg_class C
+  LEFT JOIN pg_namespace N ON (N.oid = C.relnamespace)
+  WHERE nspname NOT IN ('pg_catalog', 'information_schema')
+  ORDER BY pg_relation_size(C.oid) DESC
+  LIMIT 20;
+  
+```
+
+Only the ﬁrst column of a multi-column index can be used separately.
+
+
+Finding unused indexes:
+
+http://wiki.postgresql.org/wiki/Index_Maintenance#Unused_Indexes
+
+Explain vs explain analyze
+
+
+Load tester:
+
+httperf --server www.test.com --wsesslog 1000,2,session.log --max-piped-calls 5 --rate 20
