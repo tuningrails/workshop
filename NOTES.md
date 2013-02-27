@@ -119,4 +119,10 @@ Explain vs explain analyze
 
 Load tester:
 
-httperf --server www.test.com --wsesslog 1000,2,session.log --max-piped-calls 5 --rate 20
+% httperf --server www.test.com --wsesslog 1000,2,session.log --max-piped-calls 5 --rate 20
+
+% sh load.sh coolspots-red <number_of_sessions>
+
+## Notes
+
+top, htop
