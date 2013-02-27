@@ -150,3 +150,45 @@ log.txt:
 /spots/6
   /assets/default_spot.jpg
 ```
+
+TODO: Detail EC2 boot and config
+
+PSQL Disk Usage
+
+http://wiki.postgresql.org/wiki/Disk_Usage
+
+TOAST (or "the best thing since sliced bread")
+
+PostgreSQL uses a fixed page size (commonly 8 kB), and does not allow tuples to span multiple pages. Therefore, it is not possible to store very large field values directly. To overcome this limitation, large field values are compressed and/or broken up into multiple physical rows. 
+
+```
+SELECT nspname || '.' || relname AS relation,
+      pg_size_pretty(pg_relation_size(C.oid)) AS size
+      FROM pg_class C
+      LEFT JOIN pg_namespace N ON (N.oid = C.relnamespace)
+      WHERE nspname NOT IN ('pg_catalog', 'information_schema')
+      ORDER BY pg_relation_size(C.oid) DESC
+      LIMIT 20;
+```
+
+PSQL activity
+
+```select * from pg_stat_activity where state = 'active';"```
+
+Index usage and stats
+
+http://wiki.postgresql.org/wiki/Index_Maintenance#Index_size.2Fusage_statistics
+
+```
+SELECT nspname || '.' || relname AS relation,
+      pg_size_pretty(pg_relation_size(C.oid)) AS size
+      FROM pg_class C
+      LEFT JOIN pg_namespace N ON (N.oid = C.relnamespace)
+      WHERE nspname NOT IN ('pg_catalog', 'information_schema')
+      ORDER BY pg_relation_size(C.oid) DESC
+      LIMIT 20;
+```
+
+Speed Tracer
+
+Other queues: queue_classic (postgres only), sucker_punch (threads)
