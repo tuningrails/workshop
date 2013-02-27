@@ -128,3 +128,25 @@ Load tester:
 
 Watch system usage on Linux: top, htop
 
+load.sh:
+
+```
+while true; do
+  httperf --server $1.herokuapp.com --wsesslog $2,2,log.txt --max-piped-calls 5 --rate 20
+done
+```
+
+log.txt:
+
+```
+/guides think=2.0
+
+/guides/1
+  /assets/default_spot.jpg
+
+/spots/4
+  /assets/default_spot.jpg
+
+/spots/6
+  /assets/default_spot.jpg
+```
