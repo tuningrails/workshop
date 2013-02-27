@@ -192,3 +192,22 @@ SELECT nspname || '.' || relname AS relation,
 Speed Tracer
 
 Other queues: queue_classic (postgres only), sucker_punch (threads)
+
+Rails 3.2 generates indexes automatically on foreign keys with scaffold/migration and the 'association:references' flag.
+
+ActiveRecord Optimizations
+
+# find_each
+
+http://apidock.com/rails/ActiveRecord/Batches/find_each
+
+Model.find_each(100) - fetch records in batches to avoid memory bloat
+
+# select
+
+## Notes
+
+Confirm counter_cache votes.count vs votes_count
+Address seq scan with compound key
+Mention concurrent index add Postgres
+Discuss EC2 and other hosting alternatives, Opsworks
